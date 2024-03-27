@@ -26,29 +26,35 @@ public class GenericTile<T> : ScriptableObject
             case 0:
                 return None;
             case 1:
-                return North;
-            case 2:
                 return West;
-            case 3:
+            case 2:
                 return South;
+            case 3:
+                return WS;
             case 4:
                 return East;
             case 5:
-                return NW;
+                return WE;
             case 6:
-                return WS;
-            case 7:
                 return SE;
-            case 8:
-                return EN;
-            case 9:
-                return NWS;
-            case 10:
+            case 7:
                 return WSE;
+            case 8:
+                return North;
+            case 9:
+                return NW;
+            case 10:
+                return NS;
             case 11:
-                return SEN;
+                return NWS;
             case 12:
+                return EN;
+            case 13:
                 return ENW;
+            case 14:
+                return SEN;
+            case 15:
+                return Cross;
 
             default:
                 return None;

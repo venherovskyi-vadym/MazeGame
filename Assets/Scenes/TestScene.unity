@@ -350,6 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _size: 6
   _tilemap: {fileID: 510965216}
+  tileSprites: {fileID: 11400000, guid: c6789bd668b0b4340b35b2aac1de7fba, type: 2}
 --- !u!1 &1708058689
 GameObject:
   m_ObjectHideFlags: 0

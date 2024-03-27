@@ -34,7 +34,7 @@ public class MazePatternGenerator
         return result;
     }
 
-    private Vector2Int Rotate(Vector2Int vector)
+    public static Vector2Int Rotate(Vector2Int vector)
     {
         return new Vector2Int(-vector.y, vector.x);
     }

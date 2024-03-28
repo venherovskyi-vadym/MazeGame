@@ -12,6 +12,7 @@ public class Maze : MonoBehaviour
     [SerializeField] private float _cursorSpeed = 1;
     [SerializeField, Range(0.1f,0.9f)] private float _cursorMaxDistanceFromCellCenterPercentage = 0.3f;
     [SerializeField] private Transform _cursor;
+    [SerializeField] private GameObject _winFx;
     [SerializeField] private TextMeshProUGUI _timer;
     [SerializeField] private TextMeshProUGUI _gridPosition;
     [SerializeField] private TextMeshProUGUI _localPositionInCell;
@@ -30,10 +31,13 @@ public class Maze : MonoBehaviour
     private Vector3 _cellSize;
 
     private float _time;
+    private bool _exitReached;
 
     public void StartMaze(int mazeSize, int exitCount)
     {
         _time = 0;
+        _exitReached = false;
+        _winFx.SetActive(false);
         var generatedPattern = _generator.GeneratePatternLinks(mazeSize);
         _passageGenerator.GeneratePassages(generatedPattern);
         var exits = _exitGenerator.GenerateExits(generatedPattern, exitCount);
@@ -59,9 +63,13 @@ public class Maze : MonoBehaviour
 
     private void Update()
     {
-        _time += Time.deltaTime;
-        var timeSpan = TimeSpan.FromSeconds(_time);
-        _timer.text = $"{(int)timeSpan.TotalMinutes}:{timeSpan.TotalSeconds:0.0}";
+        if (!_exitReached)
+        {
+            _time += Time.deltaTime;
+            var timeSpan = TimeSpan.FromSeconds(_time);
+            _timer.text = $"{(int)timeSpan.TotalMinutes}:{timeSpan.TotalSeconds:0.0}";
+        }
+
         var inputVector = new Vector3(Input.GetAxis(_horizontalAxis), Input.GetAxis(_verticalAxis));
 
         _cursorPosition = ClampCursorPositionToMaze(_cursorPosition, inputVector * Time.deltaTime * _cursorSpeed);
@@ -70,6 +78,20 @@ public class Maze : MonoBehaviour
         _cursor.position = _cursorPosition;
         _localPositionInCell.text = (_cursorPosition - cellWorldPos).ToString();
         _gridPosition.text = gridPos.ToString();
+
+        if (_exitReached)
+        {
+            return;
+        }
+
+        foreach (var item in _mazeField.ExitSlotLinks)
+        {
+            if (item.End == new Vector2Int(gridPos.x, gridPos.y))
+            {
+                _exitReached = true;
+                _winFx.SetActive(true);
+            }
+        }
     }
 
     private Vector3Int GetGridPosition(Vector3 position)
@@ -95,7 +117,7 @@ public class Maze : MonoBehaviour
     private Vector3 ClampCursorPositionToMaze(Vector3 position, Vector3 delta)
     {
         var newPosition = position + delta;
-        var gridPos = GetGridPosition(newPosition);
+        var gridPos = GetGridPosition(position);
 
         Vector3Int verticalAreaMin = gridPos;
         Vector3Int verticalAreaMax = gridPos;

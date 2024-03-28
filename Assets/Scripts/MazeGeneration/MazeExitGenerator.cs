@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public class MazeExitGenerator
 {
-    public void GenerateExits(List<SlotLink> slotLinks, int exitsCount)
+    public List<SlotLink> GenerateExits(List<SlotLink> slotLinks, int exitsCount)
     {
         var minPosition = Vector2Int.zero;
         var maxPosition = Vector2Int.zero;
@@ -56,6 +56,6 @@ public class MazeExitGenerator
             exitsCount--;
         }
 
-        slotLinks.AddRange(exits);
+        return exits;
     }
 }

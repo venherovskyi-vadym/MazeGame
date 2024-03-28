@@ -67,7 +67,8 @@ public class Maze : MonoBehaviour
         {
             _time += Time.deltaTime;
             var timeSpan = TimeSpan.FromSeconds(_time);
-            _timer.text = $"{(int)timeSpan.TotalMinutes}:{timeSpan.TotalSeconds:0.0}";
+            var decimalFraction = Mathf.Min( (float)timeSpan.TotalSeconds - Mathf.FloorToInt((float)timeSpan.TotalSeconds) ,0.9f);
+            _timer.text = $"{timeSpan.ToString(@"hh\:mm\:ss")}{decimalFraction.ToString(".0")}";
         }
 
         var inputVector = new Vector3(Input.GetAxis(_horizontalAxis), Input.GetAxis(_verticalAxis));

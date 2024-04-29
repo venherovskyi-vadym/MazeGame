@@ -1,0 +1,12 @@
+Test assignment
+
+General: Create minigame Maze2D
+Game goal: find exit from maze for as least time as possible
+Description: Player spawns an the maze center.
+Maze built from square tiles, top-down view.
+Player controlled by mouse or keyboard.
+On top of UI time from start has to be displayed. Time has to be in seconds.
+Maze is being built from preconfigured map of randomly every time before the start. Second option is preferrable.
+Simple menu is a plus. It has to provide a possibility to save result locally and additional settings like maze size and exit count.
+Simple effects like particle system for win event are welcome.
+In the end of game player time has to be shown.
